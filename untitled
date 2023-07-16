@@ -1,0 +1,47 @@
+import RPi.GPIO as GPIO
+import time
+import detect as stick
+# Set GPIO pin numbers
+TRIG_PIN = 18
+ECHO_PIN = 24
+import pyttsx3
+text_speech
+
+# Set GPIO mode and pin numbering
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+# Set up the ultrasonic sensor pins
+GPIO.setup(TRIG_PIN, GPIO.OUT)
+GPIO.setup(ECHO_PIN, GPIO.IN)
+
+def get_distance():
+    # Send a pulse to the ultrasonic sensor
+    GPIO.output(TRIG_PIN, True)
+    time.sleep(0.00001)
+    GPIO.output(TRIG_PIN, False)
+
+    # Wait for the ultrasonic sensor to send a pulse back
+    while GPIO.input(ECHO_PIN) == 0:
+        pulse_start = time.time()
+
+    while GPIO.input(ECHO_PIN) == 1:
+        pulse_end = time.time()
+
+    # Calculate the distance in centimeters
+    pulse_duration = pulse_end - pulse_start
+    distance = pulse_duration * 17150
+    distance = round(distance, 2)
+    
+    return distance
+
+try:
+    while True:
+        distance = get_distance()
+        print("Distance: {} cm".format(distance))
+        if(distance<300):
+            
+        time.sleep(1)
+
+except KeyboardInterrupt:
+    GPIO.cleanup()
